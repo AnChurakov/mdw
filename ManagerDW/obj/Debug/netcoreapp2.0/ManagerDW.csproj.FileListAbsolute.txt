@@ -1,0 +1,12 @@
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\bin\Debug\netcoreapp2.0\ManagerDW.deps.json
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\bin\Debug\netcoreapp2.0\ManagerDW.runtimeconfig.json
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\bin\Debug\netcoreapp2.0\ManagerDW.runtimeconfig.dev.json
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\bin\Debug\netcoreapp2.0\ManagerDW.dll
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\bin\Debug\netcoreapp2.0\ManagerDW.pdb
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\ManagerDW.csprojResolveAssemblyReference.cache
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\ManagerDW.csproj.CoreCompileInputs.cache
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\ManagerDW.AssemblyInfoInputs.cache
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\ManagerDW.AssemblyInfo.cs
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\ManagerDW.dll
+C:\Users\1\Documents\Visual Studio 2017\Projects\ManagerDW\ManagerDW\obj\Debug\netcoreapp2.0\ManagerDW.pdb
