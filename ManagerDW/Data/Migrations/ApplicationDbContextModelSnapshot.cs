@@ -71,6 +71,18 @@ namespace ManagerDW.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("ManagerDW.Models.PriorityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PriorityModel");
+                });
+
             modelBuilder.Entity("ManagerDW.Models.ProjectModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -88,7 +100,15 @@ namespace ManagerDW.Data.Migrations
 
                     b.Property<int>("ProcentSuccess");
 
+                    b.Property<Guid?>("StageId");
+
+                    b.Property<Guid?>("StatusId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StageId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Projects");
                 });
@@ -130,7 +150,11 @@ namespace ManagerDW.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<Guid?>("PriorityId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PriorityId");
 
                     b.ToTable("Tasks");
                 });
@@ -253,6 +277,24 @@ namespace ManagerDW.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ManagerDW.Models.ProjectModel", b =>
+                {
+                    b.HasOne("ManagerDW.Models.StageModel", "Stage")
+                        .WithMany("Project")
+                        .HasForeignKey("StageId");
+
+                    b.HasOne("ManagerDW.Models.StatusModel", "Status")
+                        .WithMany("Project")
+                        .HasForeignKey("StatusId");
+                });
+
+            modelBuilder.Entity("ManagerDW.Models.TaskModel", b =>
+                {
+                    b.HasOne("ManagerDW.Models.PriorityModel", "Priority")
+                        .WithMany("Task")
+                        .HasForeignKey("PriorityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

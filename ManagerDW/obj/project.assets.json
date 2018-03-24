@@ -13130,11 +13130,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\1\\Documents\\Visual Studio 2017\\Projects\\ManagerDW\\ManagerDW\\ManagerDW.csproj",
+      "projectUniqueName": "D:\\After\\mdw\\ManagerDW\\ManagerDW.csproj",
       "projectName": "ManagerDW",
-      "projectPath": "C:\\Users\\1\\Documents\\Visual Studio 2017\\Projects\\ManagerDW\\ManagerDW\\ManagerDW.csproj",
+      "projectPath": "D:\\After\\mdw\\ManagerDW\\ManagerDW.csproj",
       "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\1\\Documents\\Visual Studio 2017\\Projects\\ManagerDW\\ManagerDW\\obj\\",
+      "outputPath": "D:\\After\\mdw\\ManagerDW\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

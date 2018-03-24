@@ -15,6 +15,7 @@ namespace ManagerDW.Data
         public DbSet<StatusModel> Status { get; set; }
         public DbSet<StageModel> Stages { get; set; }
         public DbSet<TaskModel> Tasks { get; set; }
+        public DbSet<PriorityModel> Prioritys { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
