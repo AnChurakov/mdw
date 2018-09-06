@@ -1,0 +1,318 @@
+﻿@model IEnumerable<managerdw.Models.TaskProject>
+@{
+    Layout = "~/Views/Shared/_PanelControl.cshtml";
+    ViewBag.Title = "Задачи " + ViewBag.NameProject;
+}
+
+
+
+<div class="col-md-12">
+    <div class="card">
+
+        <div class="card-body p-b-0">
+            <h4 class="card-title">Статистика по задачам проекта</h4>
+
+            <div class="row m-t-40">
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-inverse card-info">
+                        <div class="box bg-info text-center">
+                            <h1 class="font-light text-white">@Model.Where(a => a.Status.Name == "В работе").Count()</h1>
+                            <h6 class="text-white">В работе</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-success card-inverse">
+                        <div class="box text-center">
+                            <h1 class="font-light text-white">@Model.Where(a => a.Status.Name == "Выполнен").Count()</h1>
+                            <h6 class="text-white">Выполненные</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-inverse card-danger">
+                        <div class="box text-center">
+                            <h1 class="font-light text-white">@Model.Where(a => a.Status.Name == "Просрочен").Count()</h1>
+                            <h6 class="text-white">Просроченные</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+
+            </div>
+
+
+            <ul class="nav nav-tabs customtab" role="tablist">
+
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile2" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Активные</span></a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages2" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Выполненные</span></a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages3" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Просроченные</span></a> </li>
+
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" id="ajaxResults">
+
+                <div class="tab-pane active" id="profile2" role="tabpanel">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Дата создания</th>
+                                    <th>Статус</th>
+                                    <th>Приоритет</th>
+                                    <th>Этап</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var task in Model.OrderByDescending(a => a.Prioritys.Name == "Высокий").Where(t => t.Status.Name == "В работе"))
+                                {
+                                    <tr>
+                                        <td><a href="#" IdTask="@task.Id"  data-toggle="modal" data-target="#myModal" class="model_img img-responsive TaskName">@task.Name</a></td>
+                                        <td class="DateCreate">@task.Create.Value.Day.@task.Create.Value.Month.@task.Create.Value.Year</td>
+                                        <td><span class="label label-info">@task.Status.Name</span></td>
+                                        @if (task.Prioritys.Name == "Высокий")
+                                        {
+                                            <td><span class="label label-light-danger">@task.Prioritys.Name</span></td>
+                                        }
+                                        @if (task.Prioritys.Name == "Средний")
+                                        {
+                                            <td><span class="label label-light-info">@task.Prioritys.Name</span></td>
+                                        }
+                                        @if (task.Prioritys.Name == "Низкий")
+                                        {
+                                            <td><span class="label label-light-success">@task.Prioritys.Name</span></td>
+                                        }
+                                        <td class="StageTask">@task.Stages.Name</td>
+                                        
+                                        @if (User.IsInRole("Руководитель"))
+                                        {
+                                        <td>@Html.ActionLink("Удалить", "Delete", "Task", new { id = task.Id, ProjectId = ViewBag.ProjectId}, new { @class = "text-danger"})</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="tab-pane" id="messages2" role="tabpanel">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Дата создания</th>
+                                    <th>Статус</th>
+                                    <th>Приоритет</th>
+                                    <th>Этап</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var task in Model.OrderByDescending(a => a.Prioritys.Name == "Высокий").Where(t => t.Status.Name == "Выполнен"))
+                                {
+                                    <tr>
+                                        <td><a href="#" IdTask="@task.Id" data-toggle="modal" data-target="#myModal" class="model_img img-responsive TaskName">@task.Name</a></td>
+                                        <td>@task.Create.Value.Day.@task.Create.Value.Month.@task.Create.Value.Year</td>
+                                        <td><span class="label label-success">@task.Status.Name</span></td>
+                                        @if (task.Prioritys.Name == "Высокий")
+                                        {
+                                            <td><span class="label label-light-danger">@task.Prioritys.Name</span></td>
+                                        }
+                                        @if (task.Prioritys.Name == "Средний")
+                                        {
+                                            <td><span class="label label-light-info">@task.Prioritys.Name</span></td>
+                                        }
+                                        @if (task.Prioritys.Name == "Низкий")
+                                        {
+                                            <td><span class="label label-light-success">@task.Prioritys.Name</span></td>
+                                        }
+                                        <td>@task.Stages.Name</td>
+
+                                        
+                                        @if (User.IsInRole("Руководитель"))
+                                        {
+                                        <td>@Html.ActionLink("Удалить", "Delete", "Task", new { id = task.Id, ProjectId = ViewBag.ProjectId}, new { @class = "text-danger"})</td>
+                                        }
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="messages3" role="tabpanel">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Дата создания</th>
+                                    <th>Статус</th>
+                                    <th>Приоритет</th>
+                                    <th>Этап</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var task in Model.OrderByDescending(a => a.Prioritys.Name == "Высокий").Where(t => t.Status.Name == "Просрочен"))
+                                {
+                                    <tr>
+                                        <td><a href="#" IdTask="@task.Id" data-toggle="modal" data-target="#myModal" class="model_img img-responsive TaskName">@task.Name</a></td>
+                                        <td>@task.Create.Value.Day.@task.Create.Value.Month.@task.Create.Value.Year</td>
+                                        <td><span class="label label-danger">@task.Status.Name</span></td>
+                                        @if (task.Prioritys.Name == "Высокий")
+                                        {
+                                            <td><span class="label label-light-danger">@task.Prioritys.Name</span></td>
+                                        }
+                                        @if (task.Prioritys.Name == "Средний")
+                                        {
+                                            <td><span class="label label-light-info">@task.Prioritys.Name</span></td>
+                                        }
+                                        @if (task.Prioritys.Name == "Низкий")
+                                        {
+                                            <td><span class="label label-light-success">@task.Prioritys.Name</span></td>
+                                        }
+                                        <td>@task.Stages.Name</td>
+
+                                        
+                                        @if (User.IsInRole("Руководитель"))
+                                        {
+                                        <td>@Html.ActionLink("Удалить", "Delete", "Task", new { id = task.Id, ProjectId = ViewBag.ProjectId}, new { @class = "text-danger"})</td>
+                                        }
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+            <!-- sample modal content -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Дата создания: <span class="modalDate"></span></p>
+                            <p>Этап: <span class="modalStage"></span></p>
+                            @if (User.IsInRole("Руководитель"))
+                            {
+                                
+                                    <p>Изменение статуса</p>
+                                    <p>
+                                        <select class="form-control" id="StatusId">
+                                            @foreach (var status in ViewBag.Status)
+                                            {
+                                                <option value="@status.Id">@status.Name</option>
+                                            }
+                                        </select>
+                                    </p>
+                                    
+                                    <input type="hidden" value="@ViewBag.ProjectId" id="ProjectId" />                                    
+                                    <input type="button" class="btn btn-info btn-rounded" id="newStage" value="Изменить статус" />
+
+
+                                     <p>Изменение приоритета</p>
+                                    <p>
+                                        <select class="form-control" id="StatusId">
+                                            @foreach (var prior in ViewBag.Prior)
+                                            {
+                                                <option value="@prior.Id">@prior.Name</option>
+                                            }
+                                        </select>
+                                    </p>
+                                    
+                                                                     
+                                    <input type="button" class="btn btn-info btn-rounded" id="newPrior" value="Изменить приоритет" />
+
+
+                                     <p>Изменение статуса</p>
+                                    <p>
+                                        <select class="form-control" id="StatusId">
+                                            @foreach (var stage in ViewBag.Stages)
+                                            {
+                                                <option value="@stage.Id">@stage.Name</option>
+                                            }
+                                        </select>
+                                    </p>
+                                    
+                                                                
+                                    <input type="button" class="btn btn-info btn-rounded" id="newStatus" value="Изменить этапа" />
+
+                                
+                                }
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+ @section Scripts{
+     <script>
+         $(document).ready(function () {
+
+             IdTask = "";
+
+             $(".TaskName").click(function () {
+
+                 var name = $(this).text();
+
+                 IdTask = $(this).attr("IdTask");
+
+                 $("#TaskId").attr("value", IdTask);
+
+                 var date = $(this).parent().parent().find(".DateCreate").text();
+
+                 var stage = $(this).parent().parent().find(".StageTask").text();
+
+                 $(".modal-title").text(name);
+
+                 $(".modalStage").text(stage);
+
+                 $(".modalDate").text(date);
+
+             });
+
+             $("#newStage").click(function () {
+
+                 var status = $("#StatusId").val();
+
+                 var projectId = $("#ProjectId").val();
+
+                 $.ajax({
+                     type: "POST",
+                     url: '@Url.Action("UpdateStatusTask", "Task")',
+                     data: "StatusId=" + status + "&TaskId=" + IdTask + "&ProjectId="+projectId,
+                     dataType: "string",
+                     success: function () {
+                      
+                     }
+
+                 });
+
+             });
+
+         })
+     </script>
+     
+     }
