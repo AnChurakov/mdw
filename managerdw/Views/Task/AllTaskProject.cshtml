@@ -318,14 +318,72 @@
                              });
 
                          }
-
+                     }
                      });
 
              });
 
           
+              $("#newPrior").click(function () {
+
+                 var prior = $("#PriorId").val();
+
+                 var projectId = $("#ProjectId").val();
+
+                 $.ajax({
+                     type: "POST",
+                     url: '@Url.Action("UpdatePriorTask", "Task")',
+                     data: "PriorId=" + prior + "&TaskId=" + IdTask + "&ProjectId=" + projectId,
+                     dataType: "text",
+                     success: function (data) {
+
+                         if (data == "true") {
+                             $.toast({
+                                 heading: 'Приоритет',
+                                 text: 'Приоритет задачи успешно обновлен',
+                                 position: 'top-right',
+                                 loaderBg: '#ff6849',
+                                 icon: 'success',
+                                 hideAfter: 4000,
+                                 stack: 6
+                             });
+
+                         }
+                     }
+                     });
+
+             });
 
 
+              $("#newStage").click(function () {
+
+                 var stage = $("#StageId").val();
+
+                 var projectId = $("#ProjectId").val();
+
+                 $.ajax({
+                     type: "POST",
+                     url: '@Url.Action("UpdateStageTask", "Task")',
+                     data: "StageId=" + stage + "&TaskId=" + IdTask + "&ProjectId=" + projectId,
+                     dataType: "text",
+                     success: function (data) {
+
+                         if (data == "true") {
+                             $.toast({
+                                 heading: 'Этап',
+                                 text: 'Этап задачи успешно обновлен',
+                                 position: 'top-right',
+                                 loaderBg: '#ff6849',
+                                 icon: 'success',
+                                 hideAfter: 4000,
+                                 stack: 6
+                             });
+
+                         }
+                     }
+                     });
+
+             });
 
          });
      </script>
