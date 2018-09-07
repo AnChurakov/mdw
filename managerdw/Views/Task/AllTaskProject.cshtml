@@ -224,12 +224,12 @@
                                     </p>
                                     
                                     <input type="hidden" value="@ViewBag.ProjectId" id="ProjectId" />                                    
-                                    <input type="button" class="btn btn-info btn-rounded" id="newStage" value="Изменить статус" />
+                                    <input type="button" class="btn btn-info btn-rounded" id="newStatus" value="Изменить статус" />
 
 
                                      <p>Изменение приоритета</p>
                                     <p>
-                                        <select class="form-control" id="StatusId">
+                                        <select class="form-control" id="PriorId">
                                             @foreach (var prior in ViewBag.Prior)
                                             {
                                                 <option value="@prior.Id">@prior.Name</option>
@@ -241,9 +241,9 @@
                                     <input type="button" class="btn btn-info btn-rounded" id="newPrior" value="Изменить приоритет" />
 
 
-                                     <p>Изменение статуса</p>
+                                    <p>Изменение этапа</p>
                                     <p>
-                                        <select class="form-control" id="StatusId">
+                                        <select class="form-control" id="StageId">
                                             @foreach (var stage in ViewBag.Stages)
                                             {
                                                 <option value="@stage.Id">@stage.Name</option>
@@ -252,7 +252,7 @@
                                     </p>
                                     
                                                                 
-                                    <input type="button" class="btn btn-info btn-rounded" id="newStatus" value="Изменить этапа" />
+                                    <input type="button" class="btn btn-info btn-rounded" id="newStage" value="Изменить этапа" />
 
                                 
                                 }
@@ -293,7 +293,7 @@
 
              });
 
-             $("#newStage").click(function () {
+             $("#newStatus").click(function () {
 
                  var status = $("#StatusId").val();
 
@@ -302,17 +302,32 @@
                  $.ajax({
                      type: "POST",
                      url: '@Url.Action("UpdateStatusTask", "Task")',
-                     data: "StatusId=" + status + "&TaskId=" + IdTask + "&ProjectId="+projectId,
-                     dataType: "string",
-                     success: function () {
-                      
-                     }
+                     data: "StatusId=" + status + "&TaskId=" + IdTask + "&ProjectId=" + projectId,
+                     dataType: "text",
+                     success: function (data) {
 
-                 });
+                         if (data == "true") {
+                             $.toast({
+                                 heading: 'Статус',
+                                 text: 'Статус задачи успешно обновлен',
+                                 position: 'top-right',
+                                 loaderBg: '#ff6849',
+                                 icon: 'success',
+                                 hideAfter: 4000,
+                                 stack: 6
+                             });
+
+                         }
+
+                     });
 
              });
 
-         })
+          
+
+
+
+         });
      </script>
      
      }

@@ -87,7 +87,7 @@ namespace managerdw.Controllers
 
         [Authorize]
         [HttpPost]
-        public RedirectToRouteResult UpdateStatusTask(Guid StatusId, Guid TaskId, string ProjectId)
+        public string UpdateStatusTask(Guid StatusId, Guid TaskId, string ProjectId)
         {
             var task = dbContext.Tasks.FirstOrDefault(a => a.Id == TaskId);
 
@@ -98,12 +98,52 @@ namespace managerdw.Controllers
                 task.Status = status;
 
                 dbContext.SaveChanges();
-                
+
+                return "true";
             }
 
-            return RedirectToAction("AllTaskProject", new { Id = ProjectId});
+            return "false";
         }
 
+        [Authorize]
+        [HttpPost]
+        public string UpdatePriorTask(Guid PriorId, Guid TaskId, string ProjectId)
+        {
+            var task = dbContext.Tasks.FirstOrDefault(a => a.Id == TaskId);
+
+            var prior = dbContext.Priorities.FirstOrDefault(t => t.Id == PriorId);
+
+            if (task != null && prior != null)
+            {
+                task.Prioritys = prior;
+
+                dbContext.SaveChanges();
+
+                return "true";
+            }
+
+            return "false";
+        }
+
+        [Authorize]
+        [HttpPost]
+        public string UpdateStageTask(Guid StageId, Guid TaskId, string ProjectId)
+        {
+            var task = dbContext.Tasks.FirstOrDefault(a => a.Id == TaskId);
+
+            var stage = dbContext.Stages.FirstOrDefault(t => t.Id == StageId);
+
+            if (task != null && stage != null)
+            {
+                task.Stages = stage;
+
+                dbContext.SaveChanges();
+
+                return "true";
+            }
+
+            return "false";
+        }
         [Authorize]
         [HttpGet]
         public RedirectToRouteResult Delete(Guid Id, Guid ProjectId)

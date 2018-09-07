@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201809061458579_CollectIM.Designer.cs">
       <DependentUpon>201809061458579_CollectIM.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809062015556_DeleteManager.cs" />
+    <Compile Include="Migrations\201809062015556_DeleteManager.Designer.cs">
+      <DependentUpon>201809062015556_DeleteManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -358,6 +362,7 @@
     <Content Include="Views\Manage\Appoint.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
+    <Content Include="Views\Manage\Setting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -390,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809061458579_CollectIM.resx">
       <DependentUpon>201809061458579_CollectIM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809062015556_DeleteManager.resx">
+      <DependentUpon>201809062015556_DeleteManager.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

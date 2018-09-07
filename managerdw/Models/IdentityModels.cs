@@ -32,7 +32,7 @@ namespace managerdw.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            
+           
         }
 
         public DbSet<Project> Projects { get; set; }

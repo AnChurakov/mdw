@@ -79,6 +79,14 @@ namespace managerdw.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Имя")]
+        public string Firsname { get; set; }
+
+        [Required]
+        [Display(Name = "Фамилия")]
+        public string Lastname { get; set; }
     }
 
     public class ResetPasswordViewModel

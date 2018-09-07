@@ -18,10 +18,25 @@ namespace managerdw.Controllers
         [Authorize]
         public ActionResult MyProject()
         {
+     
+            List<Project> projects = new List<Project>();
 
-            var select = dbContext.Projects.Include(a => a.Users).ToList();
+            var user = dbContext.Users.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
 
-            return View(select);
+            Session["firstname"] = user.Firstname;
+
+            Session["lastname"] = user.Lastname;
+
+            Session["mail"] = user.Email;
+
+            dbContext.Entry(user).Collection(c => c.Projects).Load();
+
+            foreach (var pr in user.Projects)
+            {
+                projects.Add(pr);
+            }
+
+            return View(projects);
         }
 
         [Authorize]

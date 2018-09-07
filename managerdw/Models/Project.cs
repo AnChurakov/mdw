@@ -32,11 +32,6 @@ namespace managerdw.Models
 
         public virtual ICollection<TaskProject> Tasks { get; set; }
 
-        //Менеджер проекта
-        public virtual ApplicationUser Manager { get; set; }
-
-
-
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
      

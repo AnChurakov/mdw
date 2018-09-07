@@ -112,16 +112,18 @@
                                         <div class="dw-user-box">
                                             @*<div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>*@
                                             <div class="u-text">
-                                                <h4>Антон Чураков</h4>
-                                                <p class="text-muted">anton@digitalwolf.org</p>
+                                                <h4>@Session["firstname"] @Session["lastname"]</h4>
+                                                <p class="text-muted">@Session["mail"]</p>
 
                                             </div>
                                         </div>
                                     </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="~/Manage/Setting"><i class="ti-settings"></i> Настройки</a></li>
                                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                                     {
                                         @Html.AntiForgeryToken()
-
+                                    <li role="separator" class="divider"></li>
                                         <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i> Выход</a></li>
 
                                     }
@@ -147,7 +149,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        
+
 
                         <li class="pt-5">
                             <a href="~/Project/MyProject">
@@ -213,6 +215,18 @@
                                     <li><a href="~/Manage/AllRole">Весь список</a></li>
                                     <li><a href="~/Manage/AddRole">Добавить</a></li>
                                     <li><a href="~/Manage/Appoint">Назначить</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                                    <i class="mdi mdi-book-multiple"></i>
+                                    <span class="hide-menu">Пользователи</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="~/Manage/AllRole">Весь список</a></li>
+                                    <li><a href="~/Account/Register">Добавить нового</a></li>
+                                    
                                 </ul>
                             </li>
                         }

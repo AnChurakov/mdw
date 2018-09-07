@@ -55,6 +55,33 @@ namespace managerdw.Controllers
         }
 
         [Authorize]
+        public ActionResult Setting()
+        {
+            var user = context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+
+            return View(user);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public string UpdateFL(string lastname, string firstname)
+        {
+            var user = context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+
+            if (user != null)
+            {
+                user.Firstname = firstname;
+                user.Lastname = lastname;
+
+                context.SaveChanges();
+
+                return "true";
+            }
+
+            return "false";
+        }
+
+        [Authorize]
         public ActionResult AllRole()
         {
             ViewBag.Roles = context.Roles.ToList();

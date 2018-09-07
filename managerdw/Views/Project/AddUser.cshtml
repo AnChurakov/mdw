@@ -21,7 +21,7 @@
                             <select class="form-control" name="User">
                                 @foreach (var user in ViewBag.Users)
                                 {
-                                    <option value="@user.Id">@user.Email</option>
+                                    <option value="@user.Id">@user.Firstname @user.Lastname - @user.Email</option>
                                 }
                             </select>
                             <input type="hidden" name="ProjectId" value="@ViewBag.ProjectId" />
