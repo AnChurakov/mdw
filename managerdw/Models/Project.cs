@@ -34,6 +34,7 @@ namespace managerdw.Models
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
      
 
     }

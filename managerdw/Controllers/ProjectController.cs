@@ -7,6 +7,7 @@ using managerdw.Models;
 using managerdw.Controllers;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using MvcSiteMapProvider;
 
 namespace managerdw.Controllers
 {
@@ -49,33 +50,45 @@ namespace managerdw.Controllers
         [Authorize]
         public ActionResult Single(Guid Id)
         {
-            ViewBag.Tasks = dbContext.Tasks.Where(a => a.Project.Id == Id).OrderByDescending(t => t.Create).Take(5).ToList();
+            var project = dbContext.Projects.FirstOrDefault(a => a.Id == Id);
 
-            var completed = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка дизайна" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
+            if (project.Status.Name == "Выполнен" && (!User.IsInRole("Руководитель")))
+            {
+                return RedirectToAction("Index", "Feedback", new { Id = Id });
+            }
+            else
+            {
+                ViewBag.Tasks = dbContext.Tasks.Where(a => a.Project.Id == Id).OrderByDescending(t => t.Create).Take(5).ToList();
 
-            var total = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка дизайна" && a.Project.Id == Id).Count();
+                var completed = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка дизайна" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
 
-            ViewBag.Design = Procent(total, completed);
+                var total = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка дизайна" && a.Project.Id == Id).Count();
 
-            var completedDevelop = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка функционала" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
+                ViewBag.Design = Procent(total, completed);
 
-            var totalDevelop = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка функционала" && a.Project.Id == Id).Count();
+                var completedDevelop = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка функционала" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
 
-            ViewBag.Develop = Procent(totalDevelop, completedDevelop);
+                var totalDevelop = dbContext.Tasks.Where(a => a.Stages.Name == "Разработка функционала" && a.Project.Id == Id).Count();
 
-            var completedAnalyze = dbContext.Tasks.Where(a => a.Stages.Name == "Анализ требований" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
+                ViewBag.Develop = Procent(totalDevelop, completedDevelop);
 
-            var totalAnalyze = dbContext.Tasks.Where(a => a.Stages.Name == "Анализ требований" && a.Project.Id == Id).Count();
+                var completedAnalyze = dbContext.Tasks.Where(a => a.Stages.Name == "Анализ требований" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
 
-            ViewBag.Analyze = Procent(totalAnalyze, completedAnalyze);
+                var totalAnalyze = dbContext.Tasks.Where(a => a.Stages.Name == "Анализ требований" && a.Project.Id == Id).Count();
 
-            var completedTesting = dbContext.Tasks.Where(a => a.Stages.Name == "Тестирование" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
+                ViewBag.Analyze = Procent(totalAnalyze, completedAnalyze);
 
-            var totalTesting = dbContext.Tasks.Where(a => a.Stages.Name == "Тестирование" && a.Project.Id == Id).Count();
+                var completedTesting = dbContext.Tasks.Where(a => a.Stages.Name == "Тестирование" && a.Status.Name == "Выполнен" && a.Project.Id == Id).Count();
 
-            ViewBag.Testing = Procent(totalTesting, completedTesting);
+                var totalTesting = dbContext.Tasks.Where(a => a.Stages.Name == "Тестирование" && a.Project.Id == Id).Count();
 
-            return View(dbContext.Projects.FirstOrDefault(a => a.Id == Id));
+                ViewBag.Testing = Procent(totalTesting, completedTesting);
+
+                SiteMaps.Current.CurrentNode.Title = project.Name;
+            }
+                return View(project);
+            
+          
         }
 
         [Authorize]
@@ -99,17 +112,19 @@ namespace managerdw.Controllers
             return result;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         public ActionResult AddUser(Guid ProjectId)
         {
             ViewBag.ProjectId = ProjectId;
 
             ViewBag.Users = dbContext.Users.ToList();
 
+            SiteMaps.Current.CurrentNode.ParentNode.Title = dbContext.Projects.FirstOrDefault(t => t.Id == ProjectId).Name;
+
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         [HttpPost]
         public RedirectToRouteResult AddUserInProject(Guid ProjectId, string User)
         {
@@ -127,14 +142,14 @@ namespace managerdw.Controllers
             return RedirectToAction("AddUser", new { ProjectId = ProjectId});
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         public ActionResult AddPage()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         public RedirectToRouteResult Create(string Name, string Description, string DateComplete, string Price)
         {
             var splitDate = DateComplete.Split('/');
@@ -166,30 +181,32 @@ namespace managerdw.Controllers
             return RedirectToAction("AddPage");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         public Stage GetStage(string name)
         {
             return dbContext.Stages.FirstOrDefault(a => a.Name == name);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         public Status GetStatus(string name)
         {
             return dbContext.Status.FirstOrDefault(a => a.Name == name);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         public ActionResult Edit(Guid Id)
         {
             ViewBag.Stage = dbContext.Stages.ToList();
 
             ViewBag.Status = dbContext.Status.ToList();
 
+            SiteMaps.Current.CurrentNode.ParentNode.Title = dbContext.Projects.FirstOrDefault(t => t.Id == Id).Name;
+
             return View(dbContext.Projects.FirstOrDefault(a => a.Id == Id));
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         [HttpPost]
         public string UpdateMainInfo(Guid ProjectId, string name, string desc, string date, string price)
         {
@@ -219,7 +236,7 @@ namespace managerdw.Controllers
             return "false";
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         [HttpPost]
         public string UpdateStage(Guid StageId, Guid ProjectId)
         {
@@ -239,7 +256,7 @@ namespace managerdw.Controllers
             return "false";
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         [HttpPost]
         public string UpdateStatus(Guid StatusId, Guid ProjectId)
         {
@@ -259,7 +276,7 @@ namespace managerdw.Controllers
             return "false";
         }
 
-        [Authorize]
+        [Authorize(Roles = "Руководитель")]
         [HttpGet]
         public RedirectToRouteResult Delete(Guid Id)
         {

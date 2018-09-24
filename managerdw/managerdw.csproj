@@ -46,6 +46,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcSiteMapProvider, Version=4.6.26.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.26\lib\net45\MvcSiteMapProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.26.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.26\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -101,6 +107,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -195,6 +204,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
@@ -229,8 +239,13 @@
     <Compile Include="Migrations\201809062015556_DeleteManager.Designer.cs">
       <DependentUpon>201809062015556_DeleteManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809180947176_FeedbackProject.cs" />
+    <Compile Include="Migrations\201809180947176_FeedbackProject.Designer.cs">
+      <DependentUpon>201809180947176_FeedbackProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Priority.cs" />
@@ -242,10 +257,32 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\colors\blue-dark.css" />
+    <Content Include="Content\colors\blue.css" />
+    <Content Include="Content\colors\default-dark.css" />
+    <Content Include="Content\colors\default.css" />
+    <Content Include="Content\colors\green-dark.css" />
+    <Content Include="Content\colors\green.css" />
+    <Content Include="Content\colors\megna-dark.css" />
+    <Content Include="Content\colors\megna.css" />
+    <Content Include="Content\colors\purple-dark.css" />
+    <Content Include="Content\colors\purple.css" />
+    <Content Include="Content\colors\red-dark.css" />
+    <Content Include="Content\colors\red.css" />
+    <Content Include="Content\examples.css" />
+    <Content Include="Content\fullpage.css" />
+    <Content Include="Content\icons\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\icons\font-awesome\old\css\font-awesome.css" />
+    <Content Include="Content\icons\simple-line-icons\css\simple-line-icons.css" />
+    <Content Include="Content\icons\themify-icons\themify-icons.css" />
+    <Content Include="Content\material.css" />
+    <Content Include="Content\spinners.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -296,7 +333,26 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Mvc.sitemap" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\chat.js" />
+    <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\custom.min.js" />
+    <Content Include="Scripts\dashboard1.js" />
+    <Content Include="Scripts\dashboard2.js" />
+    <Content Include="Scripts\dashboard3.js" />
+    <Content Include="Scripts\dashboard4.js" />
+    <Content Include="Scripts\dashboard5.js" />
+    <Content Include="Scripts\dashboard6.js" />
+    <Content Include="Scripts\examples.js" />
+    <Content Include="Scripts\flot-data.js" />
+    <Content Include="Scripts\footable-init.js" />
+    <Content Include="Scripts\fullpage.js" />
+    <Content Include="Scripts\jasny-bootstrap.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -304,12 +360,27 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.PrintArea.js" />
+    <Content Include="Scripts\jquery.slimscroll.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsgrid-init.js" />
+    <Content Include="Scripts\mask.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Scripts\morris-data.js" />
+    <Content Include="Scripts\perfect-scrollbar.min.js" />
+    <Content Include="Scripts\sidebarmenu.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\validation.js" />
+    <Content Include="Scripts\validator.js" />
+    <Content Include="Scripts\waves.js" />
+    <Content Include="Scripts\widget-charts.js" />
+    <Content Include="Scripts\widget-data.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -363,6 +434,18 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Manage\Setting.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Scripts\prepros-6.config" />
+    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Feedback\HappyEnd.cshtml" />
+    <Content Include="Views\Feedback\FeedbackProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -398,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809062015556_DeleteManager.resx">
       <DependentUpon>201809062015556_DeleteManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809180947176_FeedbackProject.resx">
+      <DependentUpon>201809180947176_FeedbackProject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

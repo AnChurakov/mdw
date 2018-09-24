@@ -14,7 +14,7 @@
             @Html.ActionLink("Добавить задачу", "Add", "Task", new { id = Model.Id }, new { @class = "dropdown-item" })
             @Html.ActionLink("Добавить участника", "AddUser", "Project", new { ProjectId = Model.Id }, new { @class = "dropdown-item" })
             @Html.ActionLink("Настройки", "Edit", "Project", new { id = Model.Id }, new { @class = "dropdown-item" })
-
+            @Html.ActionLink("Отзыв Клиента", "FeedbackProject", "Feedback", new { id = Model.Id }, new { @class = "dropdown-item" })
         </div>
     </div>
 }

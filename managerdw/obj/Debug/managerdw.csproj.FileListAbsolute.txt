@@ -275,3 +275,11 @@ D:\mdwdesign\mdw\managerdw\obj\Debug\managerdw.csproj.CopyComplete
 D:\mdwdesign\mdw\managerdw\obj\Debug\managerdw.dll
 D:\mdwdesign\mdw\managerdw\obj\Debug\managerdw.pdb
 D:\mdwdesign\mdw\managerdw\obj\Debug\managerdw.Migrations.DeleteManager.resources
+D:\mdwdesign\mdw\managerdw\bin\MvcSiteMapProvider.dll
+D:\mdwdesign\mdw\managerdw\bin\MvcSiteMapProvider.WebActivator.dll
+D:\mdwdesign\mdw\managerdw\bin\WebActivatorEx.dll
+D:\mdwdesign\mdw\managerdw\bin\Microsoft.Web.Administration.dll
+D:\mdwdesign\mdw\managerdw\bin\MvcSiteMapProvider.xml
+D:\mdwdesign\mdw\managerdw\bin\MvcSiteMapProvider.WebActivator.pdb
+D:\mdwdesign\mdw\managerdw\bin\MvcSiteMapProvider.WebActivator.xml
+D:\mdwdesign\mdw\managerdw\obj\Debug\managerdw.Migrations.FeedbackProject.resources

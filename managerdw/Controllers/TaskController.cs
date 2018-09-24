@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using managerdw.Models;
+using MvcSiteMapProvider;
 
 namespace managerdw.Controllers
 {
@@ -24,9 +25,9 @@ namespace managerdw.Controllers
 
             ViewBag.Prior = dbContext.Priorities.ToList();
 
-            ViewBag.ProjectId = Id;
-
             var select = dbContext.Tasks.Where(a => a.Project.Id == Id).OrderByDescending(t => t.Create).ToList();
+
+            SiteMaps.Current.CurrentNode.ParentNode.Title = dbContext.Projects.FirstOrDefault(t => t.Id == Id).Name;
 
             return View(select);
         }
@@ -41,6 +42,8 @@ namespace managerdw.Controllers
             ViewBag.Stages = dbContext.Stages.ToList();
 
             ViewBag.ProjectId = Id;
+
+            SiteMaps.Current.CurrentNode.ParentNode.Title = dbContext.Projects.FirstOrDefault(t => t.Id == Id).Name;
 
             return View();
         }
@@ -144,6 +147,7 @@ namespace managerdw.Controllers
 
             return "false";
         }
+
         [Authorize]
         [HttpGet]
         public RedirectToRouteResult Delete(Guid Id, Guid ProjectId)
